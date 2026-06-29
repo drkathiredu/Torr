@@ -1,7 +1,7 @@
 services:
   torrserver:
     image: ghcr.io/yourok/torrserver:latest
-    restart: always
+    restart: unless-stopped
     environment:
       - TS_PORT=8090
       - TS_DONTKILL=1
@@ -13,6 +13,19 @@ services:
       - torrserver-config:/opt/ts/config
       - torrserver-cache:/opt/ts/torrents
 
+  jackett:
+    image: lscr.io/linuxserver/jackett:latest
+    restart: unless-stopped
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Asia/Kolkata
+    expose:
+      - "9117"
+    volumes:
+      - jackett-config:/config
+
 volumes:
   torrserver-config:
   torrserver-cache:
+  jackett-config:
