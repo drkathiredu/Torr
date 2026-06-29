@@ -1,0 +1,18 @@
+services:
+  torrserver:
+    image: ghcr.io/yourok/torrserver:latest
+    restart: always
+    environment:
+      - TS_PORT=8090
+      - TS_DONTKILL=1
+      - TS_CONF_PATH=/opt/ts/config
+      - TS_TORR_DIR=/opt/ts/torrents
+    expose:
+      - "8090"
+    volumes:
+      - torrserver-config:/opt/ts/config
+      - torrserver-cache:/opt/ts/torrents
+
+volumes:
+  torrserver-config:
+  torrserver-cache:
